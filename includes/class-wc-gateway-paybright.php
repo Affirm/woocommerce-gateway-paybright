@@ -174,7 +174,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 	public function check_pb_response() {
 		try {
 			global $woocommerce;
-			$data     = wc_clean( $_POST );
+			$data     = wc_clean( $_POST ); //phpcs:ignore
 			$order_id = $data['x_reference'];
 			$order    = new WC_Order( (int) $order_id );
 			// Check Signature.
