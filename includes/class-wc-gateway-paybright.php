@@ -25,6 +25,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 		$this->id                 = 'paybright';
 		$this->method_title       = __( 'PayBright', 'woocommerce-paybright-payment-gateway' );
 		$this->method_description = __( 'Pay with PayBright to finalize your payment plan and complete your purchase.', 'woocommerce-paybright-payment-gateway' );
+		$this->icon 			  = $this->get_icon();
 		$this->has_fields         = function_exists( 'is_checkout_pay_page' ) ? is_checkout_pay_page() : is_page( woocommerce_get_page_id( 'pay' ) );
 		$this->title              = __( 'PayBright', 'woocommerce-paybright-payment-gateway' );
 		$this->init_form_fields();
@@ -294,7 +295,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 	/**
 	 * Check if SSL is enabled and notify the user.
 	 */
-	private function paybright_apikeys_check() {
+	public function paybright_apikeys_check() {
 		if ( '' === $this->test_api_key || '' === $this->test_api_token ) {
 			$admin_url = admin_url( 'admin.php?page=wc-settings&tab=checkout' );
 			echo esc_attr(
@@ -584,8 +585,8 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 			echo "<script>console.log('" . esc_attr( $query1 ) . "')</script>";
 
 			$post_data['x_signature'] = $pb_sig;
-			$pb_url                   = $this->pay_bright_pay_url;
-
+			$pb_url                   = $this->paybright_pay_url;
+			
 			/**
 			 * Redirect with POST.
 			 *
@@ -595,8 +596,8 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 			 * @param string $strong strong.
 			 */
 			function RedirectWithMethodPost( $dest, $post_data, $token, $strong ) {
-				$url    = $params;
 				$params = '';
+				$url    = $params;
 				if ( strpos( $dest, '?' ) ) {
 					list($url, $params) = explode( '?', $dest, 2 );
 				} else {
@@ -616,4 +617,11 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 			echo '<script>console.log($e->getMessage());</script>';
 		}
 	}
+
+	public function get_icon()
+    {
+
+        $icon = '<img style="max-width:100%;" src="' . (plugin_dir_url(__FILE__) . 'res/images/pb.png') . '" alt="PayBright" />';
+        return apply_filters('woocommerce_gateway_icon', $icon, $this->id);
+    }
 }
