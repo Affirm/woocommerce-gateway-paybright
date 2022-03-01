@@ -25,4 +25,4 @@ jobs:
           php-version: "7.4"
           coverage: none
           tools: composer
-      - run: composer update && composer install --no-progress && ./vendor/bin/phpcs --standard=WooCommerce-Core ../../
+      - run: composer update && composer install --no-progress && ./vendor/bin/phpcs --standard=WooCommerce-Core -n $(git ls-files | grep .php$)
