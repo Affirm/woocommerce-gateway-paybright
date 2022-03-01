@@ -24,11 +24,5 @@ jobs:
         with:
           php-version: "7.4"
           coverage: none
-          tools: phpcs
-
-      - name: Run linters
-        uses: wearerequired/lint-action@v1
-        with:
-          php_codesniffer: true
-          # Optional: Ignore warnings
-          php_codesniffer_args: "-n --standard=WooCommerce-Core"
+          tools: composer
+      - run: composer update && composer install --no-progress && ./vendor/bin/phpcs --standard=WooCommerce-Core ../../
