@@ -25,7 +25,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 		$this->id                 = 'paybright';
 		$this->method_title       = __( 'PayBright', 'woocommerce-paybright-payment-gateway' );
 		$this->method_description = __( 'Pay with PayBright to finalize your payment plan and complete your purchase.', 'woocommerce-paybright-payment-gateway' );
-		$this->icon 			  = $this->get_icon();
+		$this->icon               = $this->get_icon();
 		$this->has_fields         = function_exists( 'is_checkout_pay_page' ) ? is_checkout_pay_page() : is_page( woocommerce_get_page_id( 'pay' ) );
 		$this->title              = __( 'PayBright', 'woocommerce-paybright-payment-gateway' );
 		$this->init_form_fields();
@@ -586,7 +586,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 
 			$post_data['x_signature'] = $pb_sig;
 			$pb_url                   = $this->paybright_pay_url;
-			
+
 			/**
 			 * Redirect with POST.
 			 *
@@ -618,10 +618,14 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 		}
 	}
 
-	public function get_icon()
-    {
+	/**
+	 * Return paybright icon.
+	 *
+	 * @return string
+	 */
+	public function get_icon() {
 
-        $icon = '<img style="max-width:100%;" src="' . (plugin_dir_url(__FILE__) . 'res/images/pb.png') . '" alt="PayBright" />';
-        return apply_filters('woocommerce_gateway_icon', $icon, $this->id);
-    }
+		$icon = '<img style="max-width:100%;" src="' . ( plugin_dir_url( __FILE__ ) . 'res/images/pb.png' ) . '" alt="PayBright" />';
+		return $icon;
+	}
 }
