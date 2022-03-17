@@ -4,12 +4,8 @@
  *
  * PHP version 7.2
  *
- * @category Payment_Gateways
  * @class    class-woothemes-plugin-updater
  * @package  WooCommerce
- * @author   MTA <mts@affirm.com>
- * @license  http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link     https://www.affirm.com/
  */
 
 if ( ! class_exists( 'WC_Dependencies' ) ) {

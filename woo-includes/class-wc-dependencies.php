@@ -6,12 +6,7 @@
  *
  * PHP version 7.2
  *
- * @category Payment_Gateways
- * @class    WC_Gateway_Affirm
  * @package  WooCommerce
- * @author   MTA <mts@affirm.com>
- * @license  http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link     https://www.affirm.com/
  */
 
 /**
@@ -21,12 +16,7 @@
  *
  * PHP version 7.2
  *
- * @category Payment_Gateways
- * @class    WC_Gateway_Affirm
  * @package  WooCommerce
- * @author   MTA <mts@affirm.com>
- * @license  http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link     https://www.affirm.com/
  */
 class WC_Dependencies {
 
