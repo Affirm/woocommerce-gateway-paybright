@@ -28,27 +28,28 @@
  * @package Paybright
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (! defined('ABSPATH') ) {
+    exit;
 }
 
 /**
  * Required functions and classes.
  */
-if ( ! function_exists( 'woothemes_queue_update' ) ) {
-	include_once 'woo-includes/class-woothemes-plugin-updater.php';
+if (! function_exists('woothemes_queue_update') ) {
+    include_once 'woo-includes/class-woothemes-plugin-updater.php';
 }
 
 // Include the main WooCommerce class.
-if ( ! class_exists( 'WooCommerce_Gateway_Paybright', false ) ) {
-	include_once dirname( __FILE__ ) . '/class-woocommerce-gateway-paybright.php';
+if (! class_exists('WooCommerce_Gateway_Paybright', false) ) {
+    include_once dirname(__FILE__) . '/class-woocommerce-gateway-paybright.php';
 }
 
 /**
  * Returns Affirm.
  */
-function paybright() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid.
-	return WooCommerce_Gateway_Paybright::get_instance();
+function paybright()  // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid.
+{
+    return WooCommerce_Gateway_Paybright::get_instance();
 }
 
 /**
