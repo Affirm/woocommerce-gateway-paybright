@@ -25,6 +25,7 @@
  *
  * Copyright (c) 2020, Health Smart Financial Services Inc.
  *
+ * @class WC_Gateway_Paybright
  * @package Paybright
  */
 
