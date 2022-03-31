@@ -355,8 +355,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 				'body'    => wp_json_encode( $pb_obj ),
 			)
 		);
-		
-		
+
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
 			echo "Something went wrong: '" . esc_attr( $error_message ) . "'" . esc_html( $response->get_error_message() );
