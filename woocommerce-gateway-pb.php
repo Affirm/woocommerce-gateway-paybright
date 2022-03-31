@@ -25,6 +25,7 @@
  *
  * Copyright (c) 2020, Health Smart Financial Services Inc.
  *
+ * @class WC_Gateway_Paybright
  * @package Paybright
  */
 
@@ -45,7 +46,7 @@ if ( ! class_exists( 'WooCommerce_Gateway_Paybright', false ) ) {
 }
 
 /**
- * Returns Affirm.
+ * Returns Paybright.
  */
 function paybright() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid.
 	return WooCommerce_Gateway_Paybright::get_instance();

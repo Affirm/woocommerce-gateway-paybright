@@ -6,7 +6,6 @@
  *
  * @class    WC_Gateway_Paybright
  * @package  WooCommerce
- * @link     https://www.affirm.com/
  */
 
 /**
@@ -15,7 +14,6 @@
  *
  * @class    WC_Gateway_Paybright
  * @package  WooCommerce
- * @link     https://www.affirm.com/
  */
 class WC_Gateway_Paybright extends WC_Payment_Gateway {
 	/**
@@ -39,7 +37,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 		$this->enabled           = $this->get_option( 'enabled' );
 		$this->title             = $this->get_option( 'title' );
 		$this->description       = $this->get_option( 'description' );
-		$this->notify_url        = home_url( '/' ) . '?wc-api=WC_PayBright_Payment_Gateway';
+		$this->notify_url        = home_url( '/' ) . '?wc-api=WC_Gateway_Paybright';
 		$this->callback_url      = home_url( '/' ) . 'wc-api/CALLBACK';
 
 		// What does this do?
@@ -66,7 +64,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 			)
 		);
 		add_filter(
-			'woocommerce_api_wc_paybright_payment_gateway',
+			'woocommerce_api_paybright',
 			array(
 				$this,
 				'check_pb_response',
@@ -91,6 +89,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 			)
 		);
 	}
+
 
 	/**
 	 * Initialise Gateway Settings Form Fields
@@ -174,7 +173,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 	public function check_pb_response() {
 		try {
 			global $woocommerce;
-			$data     = wc_clean( $_POST ); //phpcs:ignore
+			$data     = wc_clean( $_GET ); //phpcs:ignore
 			$order_id = $data['x_reference'];
 			$order    = new WC_Order( (int) $order_id );
 			// Check Signature.
@@ -320,7 +319,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 	public function process_refund( $order_id, $amount = null, $reason = null ) {
 		$order                       = wc_get_order( $order_id );
 		$pb_refund_account_id        = $this->test_api_key;
-		$pb_refund_amount            = wc_format_decimal( $refund_amount, wc_get_price_decimals() );
+		$pb_refund_amount            = wc_format_decimal( $amount, wc_get_price_decimals() );
 		$pb_refund_currency          = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_order_currency() : $order->get_currency();
 		$pb_refund_gateway_reference = version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->transaction_id : $order->get_transaction_id();
 		$pb_refund_reference         = version_compare( WC_VERSION, '3.0.0', '<' ) ? trim( str_replace( '#', '', $order->id ) ) : trim( str_replace( '#', '', $order->get_order_number() ) );
@@ -345,7 +344,6 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 		);
 
 		$pb_refund_url = $this->testmode ? 'https://sandbox.paybright.com/CheckOut/api2.aspx' : 'https://app.paybright.com/CheckOut/api2.aspx';
-
 		$response = wp_remote_post(
 			$pb_refund_url,
 			array(
@@ -357,11 +355,11 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 				'body'    => wp_json_encode( $pb_obj ),
 			)
 		);
-		if ( is_wp_error( $response['body'] ) ) {
-			$error_message = $response['body']->get_error_message();
-			echo "Something went wrong: '" . esc_attr( $error_message ) . "'" . esc_html( $response['body']->get_error_message() );
-		} else {
 
+		if ( is_wp_error( $response ) ) {
+			$error_message = $response->get_error_message();
+			echo "Something went wrong: '" . esc_attr( $error_message ) . "'" . esc_html( $response->get_error_message() );
+		} else {
 			$pb_responsebody       = $response['body'];
 			$pb_response_arr       = explode( '&', $pb_responsebody );
 			$pb_account_id         = explode( '=', $pb_response_arr[0] ); // x_account_id.
@@ -562,6 +560,22 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 			if ( ! empty( $shipping_postcode ) ) {
 				$post_data['x_customer_shipping_zip'] = $shipping_postcode;
 			}
+
+			$order_key = version_compare(
+				WC_VERSION,
+				'3.0',
+				'<'
+			) ? $order->order_key : $order->get_order_key();
+
+			$confirmation_url = add_query_arg(
+				array(
+					'action'    => 'complete_checkout',
+					'order_id'  => $order_id,
+					'order_key' => $order_key,
+				),
+				WC()->api_request_url( get_class( $this ) )
+			);
+
 			$post_data['x_platform']     = 'woocommerce';
 			$post_data['x_reference']    = trim( str_replace( '#', '', $order->get_order_number() ) );
 			$post_data['x_shop_country'] = 'CA';
@@ -569,7 +583,7 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 			$post_data['x_test']         = $this->testmode ? 'true' : 'false';
 			$post_data['x_url_callback'] = html_entity_decode( $this->notify_url );
 			$post_data['x_url_cancel']   = html_entity_decode( version_compare( WC_VERSION, '3.0.0', '<' ) ? $order->get_cancel_order_url() : $order->get_cancel_order_url() );
-			$post_data['x_url_complete'] = ( $this->get_return_url( $order ) );
+			$post_data['x_url_complete'] = $confirmation_url;
 			$query1                      = implode(
 				'',
 				array_map(
