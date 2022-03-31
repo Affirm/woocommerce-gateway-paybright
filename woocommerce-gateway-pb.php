@@ -46,7 +46,7 @@ if ( ! class_exists( 'WooCommerce_Gateway_Paybright', false ) ) {
 }
 
 /**
- * Returns Paybrigt.
+ * Returns Paybright.
  */
 function paybright() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid.
 	return WooCommerce_Gateway_Paybright::get_instance();
