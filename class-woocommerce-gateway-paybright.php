@@ -6,7 +6,6 @@
  *
  * @class    WC_Gateway_Paybright
  * @package  WooCommerce
- * @link     https://www.affirm.com/
  */
 
 /**
@@ -15,7 +14,6 @@
  *
  * @class    WC_Gateway_Paybright
  * @package  WooCommerce
- * @link     https://www.affirm.com/
  */
 class WooCommerce_Gateway_Paybright {
 	/**

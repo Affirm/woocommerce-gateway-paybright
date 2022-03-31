@@ -6,7 +6,6 @@
  *
  * @class    WC_Gateway_Paybright
  * @package  WooCommerce
- * @link     https://www.affirm.com/
  */
 
 /**
@@ -15,7 +14,6 @@
  *
  * @class    WC_Gateway_Paybright
  * @package  WooCommerce
- * @link     https://www.affirm.com/
  */
 class WC_Gateway_Paybright extends WC_Payment_Gateway {
 	/**
@@ -346,7 +344,6 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 		);
 
 		$pb_refund_url = $this->testmode ? 'https://sandbox.paybright.com/CheckOut/api2.aspx' : 'https://app.paybright.com/CheckOut/api2.aspx';
-		error_log(json_encode($pb_obj));
 		$response = wp_remote_post(
 			$pb_refund_url,
 			array(
@@ -361,11 +358,9 @@ class WC_Gateway_Paybright extends WC_Payment_Gateway {
 		
 		
 		if ( is_wp_error( $response ) ) {
-			error_log(json_encode($response));
 			$error_message = $response->get_error_message();
 			echo "Something went wrong: '" . esc_attr( $error_message ) . "'" . esc_html( $response->get_error_message() );
 		} else {
-			error_log(json_encode($response));
 			$pb_responsebody       = $response['body'];
 			$pb_response_arr       = explode( '&', $pb_responsebody );
 			$pb_account_id         = explode( '=', $pb_response_arr[0] ); // x_account_id.
