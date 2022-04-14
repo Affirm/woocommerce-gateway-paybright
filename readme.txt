@@ -2,8 +2,8 @@
 Contributors: Paybright
 Tags: ecommerce, e-commerce, commerce, wordpress ecommerce, store, sales, sell, shop, shopping, cart, checkout, transaction
 Requires WooCommerce atleast: Version 2.5
-Tested up to: 6.3.0
-Stable tag: 2.0.0
+Tested up to: 5.9.0
+Stable tag: 2.0.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

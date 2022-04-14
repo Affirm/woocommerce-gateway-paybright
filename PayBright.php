@@ -3,7 +3,7 @@
  * Plugin Name: PayBright Payment Gateway
  * Plugin URI: https://paybright.com/
  * Description: PayBright Payment Gateway - Woocommerce Payment Method.
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: PayBright
  * Author URI: https://paybright.com/en/company
  * Developer: Gurpreet Dhadda, Mahima Doda, Sanuja, Dilna Anto, Clyde Grey, Prasad Kamat, Victor Velasquez, Houssem Gharssallah
