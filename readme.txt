@@ -93,3 +93,5 @@ Yes, it supports both the modes. API keys for both are provided by the PayBright
 * WooCommerce callback fraud fixes
 = 2.0.0 - 14/04/2022 =
 * Support added for WooCommerce 6.3
+= 2.0.1 - 14/04/2022 =
+* Minor fix
